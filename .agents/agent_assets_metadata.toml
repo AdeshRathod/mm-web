@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "lSC0VPqt-dEknq16TUmj3"
+uri = "file://artifacts/anand-maratha/src/assets/images/groom-avatar.png"
+type = "image"
+title = "Groom avatar illustration"
+
+[[generated]]
+id = "Twccj9HRUbOLcaLnABTFt"
+uri = "file://artifacts/anand-maratha/src/assets/images/bride-avatar.png"
+type = "image"
+title = "Bride avatar illustration"
+
+[[generated]]
+id = "-xXuAqzhNI8af98qgYc4V"
+uri = "file://artifacts/anand-maratha/src/assets/images/couple-1.png"
+type = "image"
+title = "Couple success story 1"
+
+[[generated]]
+id = "pNy3rhnpag-hYX24EXWpb"
+uri = "file://artifacts/anand-maratha/src/assets/images/couple-2.png"
+type = "image"
+title = "Couple success story 2"
+
+[[generated]]
+id = "oufTrWDTGcVZ04gI4FJA0"
+uri = "file://artifacts/anand-maratha/src/assets/images/couple-3.png"
+type = "image"
+title = "Couple success story 3"
