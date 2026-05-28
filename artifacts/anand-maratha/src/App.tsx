@@ -2,6 +2,8 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
+import { ProtectedAdminRoute } from "@/components/admin/ProtectedAdminRoute";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Enroll from "@/pages/Enroll";
@@ -29,6 +31,7 @@ const queryClient = new QueryClient();
 function Router() {
   return (
     <Switch>
+      {/* Public pages */}
       <Route path="/" component={Home} />
       <Route path="/enroll" component={Enroll} />
       <Route path="/rules" component={Rules} />
@@ -42,15 +45,36 @@ function Router() {
       <Route path="/search/:type" component={Search} />
       <Route path="/profiles" component={Profiles} />
       <Route path="/profiles/:type" component={Profiles} />
+
+      {/* Admin login — public */}
       <Route path="/admin/login" component={AdminLogin} />
-      <Route path="/admin" component={Dashboard} />
-      <Route path="/admin/members" component={Members} />
-      <Route path="/admin/approvals" component={Approvals} />
-      <Route path="/admin/responses" component={Responses} />
-      <Route path="/admin/success-stories" component={AdminSuccessStories} />
-      <Route path="/admin/renewals" component={Renewals} />
-      <Route path="/admin/payments" component={Payments} />
-      <Route path="/admin/settings" component={Settings} />
+
+      {/* Protected admin routes */}
+      <Route path="/admin">
+        {() => <ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/members">
+        {() => <ProtectedAdminRoute><Members /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/approvals">
+        {() => <ProtectedAdminRoute><Approvals /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/responses">
+        {() => <ProtectedAdminRoute><Responses /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/success-stories">
+        {() => <ProtectedAdminRoute><AdminSuccessStories /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/renewals">
+        {() => <ProtectedAdminRoute><Renewals /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/payments">
+        {() => <ProtectedAdminRoute><Payments /></ProtectedAdminRoute>}
+      </Route>
+      <Route path="/admin/settings">
+        {() => <ProtectedAdminRoute><Settings /></ProtectedAdminRoute>}
+      </Route>
+
       <Route component={NotFound} />
     </Switch>
   );
@@ -60,10 +84,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <AdminAuthProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </AdminAuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

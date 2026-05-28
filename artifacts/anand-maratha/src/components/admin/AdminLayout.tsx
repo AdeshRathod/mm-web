@@ -15,13 +15,20 @@ import {
   Search,
   Menu
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const { logout } = useAdminAuth();
+
+  const handleLogout = () => {
+    logout();
+    setLocation("/admin/login");
+  };
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -101,7 +108,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <Button 
             variant="ghost" 
             className="w-full justify-start text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-white"
-            onClick={() => window.location.href = "/"}
+            onClick={handleLogout}
             data-testid="admin-logout-btn"
           >
             <LogOut className="h-4 w-4 mr-2" />
